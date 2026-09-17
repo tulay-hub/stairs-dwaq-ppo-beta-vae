@@ -1,3 +1,6 @@
+<p align="center"><a href="#zh">🇨🇳 中文</a> &nbsp;|&nbsp; <a href="#en">🇬🇧 English</a></p>
+<a id="zh"></a>
+
 # 06 · 上台阶（DWAQ Stairs）
 
 ## 项目定位
@@ -39,6 +42,8 @@ success-gated curriculum，因此任务 ID、实验和导出目录与 `03_walk` 
 地形可见性和短时 smoke test，不能仅凭注册成功或已有 DWAQ checkpoint 声称楼梯已经收敛。
 
 奖励结构见 [`docs/REWARD_FRAMEWORKS.md`](docs/REWARD_FRAMEWORKS.md) 的楼梯章节。
+
+<a id="en"></a>
 
 ## English
 
