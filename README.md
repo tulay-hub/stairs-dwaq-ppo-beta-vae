@@ -158,7 +158,7 @@ docs/                              # 奖励证据和复现记录
 训练入口：
 
 ```bash
-./projects/06_stairs/scripts/train.sh --headless --num_envs 4096
+./scripts/train.sh --headless --num_envs 4096
 ```
 
 训练复现必须记录 terrain seed、row、patch 尺寸、成功 streak、command range、checkpoint、76/380/21 interface 和回放时长。不要直接用 flat-walk 的 export package 冒充 stair package。
@@ -227,4 +227,4 @@ The velocity MSE, next-observation reconstruction MSE, and `beta*KL` are DWAQ al
 
 ## Reproduction and deployment
 
-Run `./projects/06_stairs/scripts/train.sh --headless --num_envs 4096` with the local Isaac Lab environment. Record terrain seed, row, success streak, command range, checkpoint, interface shapes, joint order, and replay duration. Export both current observation and history, replay on matching MuJoCo terrain/XML, and only then connect a ROS2/infer_zero adapter. Hardware reconstructs the same actor terms from real sensors and does not use terrain height or privileged critic values.
+Run `./scripts/train.sh --headless --num_envs 4096` with the local Isaac Lab environment. Record terrain seed, row, success streak, command range, checkpoint, interface shapes, joint order, and replay duration. Export both current observation and history, replay on matching MuJoCo terrain/XML, and only then connect a ROS2/infer_zero adapter. Hardware reconstructs the same actor terms from real sensors and does not use terrain height or privileged critic values.
