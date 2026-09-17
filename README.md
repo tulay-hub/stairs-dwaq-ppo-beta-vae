@@ -1,4 +1,4 @@
-<p align="center"><a href="#zh">🇨🇳 中文</a> &nbsp;|&nbsp; <a href="#en">🇬🇧 English</a></p>
+<p align="center"><a href="#zh">中文</a> &nbsp;|&nbsp; <a href="#en">English</a></p>
 <a id="zh"></a>
 
 # 06 · 上台阶（DWAQ Stairs）
@@ -13,6 +13,28 @@ success-gated curriculum，因此任务 ID、实验和导出目录与 `03_walk` 
 - 配置：`framework/isaaclab_shared/lens110/legged_lab_lbot/source/legged_lab/legged_lab/tasks/locomotion/dwaq/config/lens110/lens110_stairs_dwaq_env_cfg.py`
 - 地形：`LENS110_RANDOM_STAIRS_ROUGH_TERRAINS_CFG`
 - 难度范围：当前随机路径表面高度控制为约 `5..30 cm`
+
+## 训练架构和演示
+
+DWAQ、PPO、β-VAE、76/380/21 接口、完整 reward、楼梯 terrain 和成功门控 curriculum 见 [`docs/TRAINING_ARCHITECTURE.md`](docs/TRAINING_ARCHITECTURE.md)。
+
+<video controls width="720" src="docs/media/stairs-blind-terrain-demo.mp4"></video>
+
+[打开或下载盲走楼梯全地形演示视频](docs/media/stairs-blind-terrain-demo.mp4)
+
+![盲走训练地形](docs/media/stairs-terrain.png)
+
+### 附加视觉楼梯演示
+
+以下视频是视觉上楼梯/视觉识别楼梯的补充演示，不属于当前 DWAQ 盲行走 actor 的输入契约；当前 DWAQ actor 仍只使用本体感觉、命令、历史和步态相位。
+
+<video controls width="720" src="docs/media/stairs-vision-up-demo.mp4"></video>
+
+[打开或下载视觉上楼梯演示](docs/media/stairs-vision-up-demo.mp4)
+
+<video controls width="720" src="docs/media/stairs-vision-recognition-demo.mp4"></video>
+
+[打开或下载视觉识别楼梯演示](docs/media/stairs-vision-recognition-demo.mp4)
 
 ## 目录
 
