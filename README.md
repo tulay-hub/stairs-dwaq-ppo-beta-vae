@@ -1,11 +1,11 @@
 <p align='center'><a href='#zh'>中文</a> | <a href='#en'>English</a></p>
 <a id='zh'></a>
 
-# 上台阶训练架构（DWAQ + PPO + β-VAE）
+# 盲走上楼梯训练架构（DWAQ + PPO + β-VAE）
 
 ## 1. 项目定位
 
-本项目是双足人形机器人的独立楼梯行走训练项目。它复用 `03_walk` 的 DWAQ actor、Context β-VAE、privileged critic、PPO 和环境奖励，但使用独立的随机楼梯 terrain generator 与成功门控 curriculum。因此楼梯的任务 ID、实验目录、checkpoint 和导出包必须与平地行走分开。
+本项目是双足人形机器人的独立盲走上楼梯训练项目。它复用 `03_walk` 的 DWAQ actor、Context β-VAE、privileged critic、PPO 和环境奖励，但使用独立的随机楼梯 terrain generator 与成功门控 curriculum。因此楼梯的任务 ID、实验目录、checkpoint 和导出包必须与平地行走分开。
 
 | 项目项 | 当前配置 |
 |---|---|
@@ -21,9 +21,9 @@
 | surface height | 难度约 `5..30 cm` |
 | 初始难度 | `max_init_terrain_level=0` |
 
-## 2. DWAQ 在楼梯上的原理
+## 2. DWAQ 盲走上楼梯原理
 
-楼梯任务仍是盲行走：actor 不直接接收真实 base linear velocity。它从 5 帧历史中提取 19 维 context（速度 3 + latent 16），再与当前 76 维观测拼接，输出 21 维关节动作。楼梯几何通过物理接触、关节状态、IMU 和足端反馈间接影响策略，不额外假设一个可直接读取的楼梯高度输入。
+盲走上楼梯任务不使用视觉输入：actor 不直接接收真实 base linear velocity，也不接收相机、深度图或楼梯高度图。它从 5 帧历史中提取 19 维 context（速度 3 + latent 16），再与当前 76 维观测拼接，输出 21 维关节动作。楼梯几何通过物理接触、关节状态、IMU 和足端反馈间接影响策略。
 
 与平地 DWAQ 的区别不在网络，而在训练分布和 curriculum：
 
@@ -207,11 +207,11 @@ flowchart TD
 
 <a id='en'></a>
 
-# Stair Training Architecture (DWAQ + PPO + beta-VAE)
+# Blind Stair-Walking Training Architecture (DWAQ + PPO + beta-VAE)
 
 ## Scope
 
-This repository trains stair walking for a bipedal humanoid robot as a separate task. It reuses the flat-walking DWAQ actor, Context beta-VAE, privileged critic, PPO algorithm, and reward terms, but uses an independent randomized loop terrain and success-gated curriculum. The stair task, runs, checkpoints, and export packages must remain separate from flat walking.
+This repository trains blind stair walking for a bipedal humanoid robot as a separate task. The actor does not use cameras, depth images, terrain-height images, or an explicit stair-height input. It reuses the flat-walking DWAQ actor, Context beta-VAE, privileged critic, PPO algorithm, and reward terms, but uses an independent randomized loop terrain and success-gated curriculum. The stair task, runs, checkpoints, and export packages must remain separate from flat walking.
 
 The actor contract is 76 observations, a five-frame 380-dimensional history, and 21 actions. The Context VAE produces a 19-dimensional code: 3 velocity dimensions plus 16 latent dimensions. The external ONNX probe is `obs [1,76]` plus `obs_history [1,380]` to `action [1,21]`. Physics runs at 500 Hz and the policy at 100 Hz.
 
