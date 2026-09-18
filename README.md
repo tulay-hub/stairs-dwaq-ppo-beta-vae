@@ -3,14 +3,6 @@
 
 # 盲走上楼梯训练架构（DWAQ + PPO + β-VAE）
 
-## 训练权重如何理解 / Interpreting training weights
-
-本文按本仓库当前代码说明训练机制；已有策略的复现参数以对应 run 的 `params/env.yaml`、`params/agent.yaml` 和部署配置为准。奖励混合系数、逐项环境奖励权重、优化器 loss 系数、专家样本比例以及课程采样范围是不同概念。
-
-混合系数可以写成 85%/15% 这样的配置比例，但不能代表训练过程中实际累计奖励贡献；单项 reward 的数值范围、门控、控制步长和出现频率都不同。需要实际贡献占比时，应统计同一 run 中每项加权回报，而不是把配置权重归一化成百分比。
-
-Configuration mixing coefficients are not measured reward contributions. Environment weights, optimizer coefficients, expert sampling and curriculum schedules describe different parts of training. Reproduce a saved policy with its own run snapshots.
-
 ## PPO、β-VAE 与奖励权重的分工
 
 当前策略由 `DWAQRunner → ActorCriticDWAQ → DWAQPPO` 构建；PPO 优化 actor/critic，β-VAE 通过独立 Adam 更新编码器/解码器。没有配置 AMP 判别器或专家动作模仿损失；腿部周期参考奖励是参数化步态先验，不等同于专家动作数据集。
@@ -156,6 +148,14 @@ DWAQ context 配置为 `code_dim=19`、`velocity_dim=3`、latent `16`。actor �
 | 步态先验 | `gait_phase_contact` | `+0.2` | 约束相位和足端接触 |
 
 上述是 `RewardManager` 环境奖励。DWAQ 算法层另外计算 velocity MSE、next-observation reconstruction MSE 和 `beta*KL`；这三项不属于楼梯 reward，也不因为 terrain 变成奖励项。
+
+## 训练权重如何理解 / Interpreting training weights
+
+本文按本仓库当前代码说明训练机制；已有策略的复现参数以对应 run 的 `params/env.yaml`、`params/agent.yaml` 和部署配置为准。奖励混合系数、逐项环境奖励权重、优化器 loss 系数、专家样本比例以及课程采样范围是不同概念。
+
+混合系数可以写成 85%/15% 这样的配置比例，但不能代表训练过程中实际累计奖励贡献；单项 reward 的数值范围、门控、控制步长和出现频率都不同。需要实际贡献占比时，应统计同一 run 中每项加权回报，而不是把配置权重归一化成百分比。
+
+Configuration mixing coefficients are not measured reward contributions. Environment weights, optimizer coefficients, expert sampling and curriculum schedules describe different parts of training. Reproduce a saved policy with its own run snapshots.
 
 ## 7. 成功门控 terrain curriculum
 
